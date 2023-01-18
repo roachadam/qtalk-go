@@ -5,7 +5,7 @@ import (
 	"encoding/binary"
 	"io"
 
-	"github.com/progrium/qtalk-go/codec"
+	"github.com/roachadam/qtalk-go/codec"
 )
 
 // FrameCodec is a special codec used to actually read/write other

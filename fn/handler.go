@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/progrium/qtalk-go/rpc"
+	"github.com/roachadam/qtalk-go/rpc"
 )
 
 // HandlerFrom uses reflection to return a handler from either a function or

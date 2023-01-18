@@ -6,7 +6,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/progrium/qtalk-go/mux/frame"
+	"github.com/roachadam/qtalk-go/mux/frame"
 )
 
 type channelDirection uint8

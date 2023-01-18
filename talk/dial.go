@@ -3,8 +3,8 @@ package talk
 import (
 	"fmt"
 
-	"github.com/progrium/qtalk-go/codec"
-	"github.com/progrium/qtalk-go/mux"
+	"github.com/roachadam/qtalk-go/codec"
+	"github.com/roachadam/qtalk-go/mux"
 )
 
 // A Dialer connects to address and establishes a mux.Session

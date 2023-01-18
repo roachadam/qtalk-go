@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	fn "github.com/progrium/qtalk-go/exp"
-	"github.com/progrium/qtalk-go/rpc"
+	fn "github.com/roachadam/qtalk-go/exp"
+	"github.com/roachadam/qtalk-go/rpc"
 )
 
 type mockCaller struct {

@@ -1,4 +1,4 @@
-module github.com/progrium/qtalk-go
+module github.com/roachadam/qtalk-go
 
 go 1.18
 

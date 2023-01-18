@@ -6,8 +6,8 @@ import (
 	"log"
 	"net"
 
-	"github.com/progrium/qtalk-go/codec"
-	"github.com/progrium/qtalk-go/mux"
+	"github.com/roachadam/qtalk-go/codec"
+	"github.com/roachadam/qtalk-go/mux"
 )
 
 // Server wraps a Handler and codec to respond to RPC calls.

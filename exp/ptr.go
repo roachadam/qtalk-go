@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/progrium/qtalk-go/fn"
-	"github.com/progrium/qtalk-go/rpc"
+	"github.com/roachadam/qtalk-go/fn"
+	"github.com/roachadam/qtalk-go/rpc"
 	"github.com/rs/xid"
 )
 

@@ -7,9 +7,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/progrium/qtalk-go/codec"
-	"github.com/progrium/qtalk-go/rpc"
-	"github.com/progrium/qtalk-go/rpc/rpctest"
+	"github.com/roachadam/qtalk-go/codec"
+	"github.com/roachadam/qtalk-go/rpc"
+	"github.com/roachadam/qtalk-go/rpc/rpctest"
 )
 
 func TestHandlerFromBadData(t *testing.T) {

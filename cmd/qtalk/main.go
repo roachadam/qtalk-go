@@ -9,8 +9,8 @@ import (
 	"net/url"
 
 	"github.com/progrium/clon-go"
-	"github.com/progrium/qtalk-go/codec"
-	"github.com/progrium/qtalk-go/talk"
+	"github.com/roachadam/qtalk-go/codec"
+	"github.com/roachadam/qtalk-go/talk"
 )
 
 func main() {
