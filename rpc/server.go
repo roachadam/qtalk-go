@@ -14,6 +14,7 @@ import (
 type Server struct {
 	Handler Handler
 	Codec   codec.Codec
+	sess    mux.Session
 }
 
 // ServeMux will Accept sessions until the Listener is closed, and will Respond to accepted sessions in their own goroutine.
@@ -100,3 +101,96 @@ func (s *Server) respond(hn Handler, sess mux.Session, ch mux.Channel, ctx conte
 		ch.Close()
 	}
 }
+func (s *Server) Call(ctx context.Context, selector string, args any, replies ...any) (*Response, error) {
+	ch, err := s.sess.Open(ctx)
+	if err != nil {
+		return nil, err
+	}
+	// If the context is cancelled before the call completes, call Close() to
+	// abort the current operation.
+	done := make(chan struct{})
+	defer close(done)
+	go func() {
+		select {
+		case <-ctx.Done():
+			ch.Close()
+		case <-done:
+		}
+	}()
+	resp, err := call(ctx, ch, s.Codec, selector, args, replies...)
+	if ctxErr := ctx.Err(); ctxErr != nil {
+		return resp, ctxErr
+	}
+	return resp, err
+}
+
+// func call(ctx context.Context, ch mux.Channel, cd codec.Codec, selector string, args any, replies ...any) (*Response, error) {
+// 	framer := &FrameCodec{Codec: cd}
+// 	enc := framer.Encoder(ch)
+// 	dec := framer.Decoder(ch)
+
+// 	// request
+// 	err := enc.Encode(CallHeader{
+// 		Selector: selector,
+// 	})
+// 	if err != nil {
+// 		ch.Close()
+// 		return nil, err
+// 	}
+
+// 	argCh, isChan := args.(chan interface{})
+// 	switch {
+// 	case isChan:
+// 		for arg := range argCh {
+// 			if err := enc.Encode(arg); err != nil {
+// 				ch.Close()
+// 				return nil, err
+// 			}
+// 		}
+// 	default:
+// 		if err := enc.Encode(args); err != nil {
+// 			ch.Close()
+// 			return nil, err
+// 		}
+// 	}
+
+// 	// response
+// 	var header ResponseHeader
+// 	err = dec.Decode(&header)
+// 	if err != nil {
+// 		ch.Close()
+// 		return nil, err
+// 	}
+
+// 	if !header.Continue {
+// 		defer ch.Close()
+// 	}
+
+// 	resp := &Response{
+// 		ResponseHeader: header,
+// 		Channel:        ch,
+// 		codec:          framer,
+// 	}
+// 	if len(replies) == 1 {
+// 		resp.Reply = replies[0]
+// 	} else if len(replies) > 1 {
+// 		resp.Reply = replies
+// 	}
+// 	if resp.Error != nil {
+// 		return resp, RemoteError(*resp.Error)
+// 	}
+
+// 	if resp.Reply == nil {
+// 		// read into throwaway buffer
+// 		var buf []byte
+// 		dec.Decode(&buf)
+// 	} else {
+// 		for _, r := range replies {
+// 			if err := dec.Decode(r); err != nil {
+// 				return resp, err
+// 			}
+// 		}
+// 	}
+
+// 	return resp, nil
+// }
